@@ -1,0 +1,91 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class Homepage extends JFrame {
+
+    private JLabel welcomeLabel;
+    private JLabel helloLabel;
+    private JButton viewProfileButton;
+    private JButton settingsButton;
+    private JButton logoutButton;
+    private JLabel authorLabel;
+
+    public Homepage() {
+        initComponents();
+    }
+
+    private void initComponents() {
+        setTitle("Homepage - Welcome!");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(500, 320);
+        setLocationRelativeTo(null); // Center the window
+
+        JPanel mainPanel = new JPanel();
+        mainPanel.setBackground(Color.WHITE);
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        mainPanel.setBorder(BorderFactory.createLineBorder(new Color(180, 180, 255), 2));
+
+        // Welcome message
+        welcomeLabel = new JLabel("Welcome to the Homepage");
+        welcomeLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        welcomeLabel.setForeground(Color.RED);
+        welcomeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Hello user
+        helloLabel = new JLabel("<html><i><font color='blue'>Hello, User!</font></i></html>");
+        helloLabel.setFont(new Font("Serif", Font.ITALIC, 18));
+        helloLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Buttons
+        viewProfileButton = new JButton("View Profile");
+        settingsButton = new JButton("Settings");
+        logoutButton = new JButton("Logout");
+
+        // Button panel
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
+        buttonPanel.setBackground(Color.WHITE);
+        buttonPanel.add(viewProfileButton);
+        buttonPanel.add(settingsButton);
+        buttonPanel.add(logoutButton);
+
+        // Author label
+        authorLabel = new JLabel("Created with ❤️ by ArvindK");
+        authorLabel.setFont(new Font("SansSerif", Font.PLAIN, 12));
+        authorLabel.setForeground(Color.GRAY);
+        authorLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Add components
+        mainPanel.add(Box.createVerticalStrut(20));
+        mainPanel.add(welcomeLabel);
+        mainPanel.add(Box.createVerticalStrut(10));
+        mainPanel.add(helloLabel);
+        mainPanel.add(Box.createVerticalStrut(30));
+        mainPanel.add(buttonPanel);
+        mainPanel.add(Box.createVerticalStrut(20));
+        mainPanel.add(authorLabel);
+        mainPanel.add(Box.createVerticalStrut(10));
+
+        add(mainPanel);
+
+        // Add functionality to buttons
+        viewProfileButton.addActionListener(e -> showMessage("👤 Here's your profile. (Coming soon!)"));
+        settingsButton.addActionListener(e -> showMessage("⚙️ Opening settings..."));
+        logoutButton.addActionListener(e -> {
+            int confirm = JOptionPane.showConfirmDialog(this, "Do you really want to logout?", "Confirm Logout", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                dispose(); // Close the homepage
+                JOptionPane.showMessageDialog(null, "You have been logged out. See you again soon!");
+            }
+        });
+    }
+
+    // Helper method to show message in a popup
+    private void showMessage(String message) {
+        JOptionPane.showMessageDialog(this, message, "Info", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new Homepage().setVisible(true));
+    }
+}
